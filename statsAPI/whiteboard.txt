@@ -1,0 +1,31 @@
+In order to calculate data easily on data sets it seems like I need to keep
+said datasets in an object; this will make things easier for a few reasons.
+
+    1.) Automatically assign variables based on type of dataset (grouped, sample, population)
+    2.) Save me a lot of time typing everything out.
+
+What do I want out of this program?
+
+I want to be able to give the computer an array of data, and have it do the rest
+to make the data intelligible.
+Should be able to take a dataset
+
+
+Basically I need 2 things:
+    1.) An iterative table generator to deal with grouping data
+        --this will contain the formulas for grouped data, like frequencies, etc.
+    2.) A bunch of formulas for all types of data
+
+Should I make the dataset an object or should I make it just an array??
+
+Object:
+Would be able to assume certain properties about it like how to sdev and variance
+Could become complicated
+Couldn't I just do this on the fly if I need data?
+If i want to package this up I need an easy system for generating objects.... but I 
+also have time constraints because i am really doing this as a supplement for 
+my stats class... hmmmmmmmm.
+
+CONCLUSION (For now):
+    Skip all formulas dealing with grouped data until a less complicated solution can 
+    be worked out. It is simpler this way.

@@ -48,23 +48,7 @@ function sumArray(arr){
     return sum;
 }
 
-//standard deviation - needs worked on.
-function standardDeviation(arr){
-    const MEAN = mean(arr);
-    let topLine = 0;
-    let n = arr.length -1;
-    let variance = 0;
-    let sdev = 0;
-    //math for top line (element - mean squared, added repeatdly)
-    arr.forEach(element => {
-        topLine += (element - MEAN) * (element - MEAN);
-        
-    });
-    
-    variance = (topLine/n);
-    sdev = Math.sqrt(variance);
-    return sdev;
-}
+
 
 //provides a list of mid points from a 2 dimensional array, returns a string of midpoints
 // array = [[low limit, high limit, datapoint],[low limit, high limit, datapoint]];
@@ -83,15 +67,50 @@ function listOfMidpoints(arr){
     return listofpoints;
 }
 
+//variance for population
+function variancePopulation(arr){
+    const MEAN = mean(arr);
+    let topLine = 0;
+    let n = arr.length;
+    let variance = 0;
+    arr.forEach(element => {
+        topLine += Math.pow((element - MEAN), 2);
+    });
+    variance = (topLine/n);
+    return variance;
+}
+
+//Variance for sample
+function varianceSample(arr){
+    const MEAN = mean(arr);
+    let topLine = 0;
+    let n = arr.length -1;
+    let variance = 0;
+    arr.forEach(element => {
+        topLine += Math.pow((element - MEAN), 2);
+    });
+    variance = (topLine/n);
+    return variance;
+}
+
+//Standard deviation for a population
+function stDevPopulation(arr){
+    return Math.sqrt(variancePopulation(arr));
+}
+
+//Standard deviation for a Sample
+function stDevSample(arr){
+    return Math.sqrt(varianceSample(arr));
+}
+
+//coefficient of variation
+function coefficientOfVariation(sdev, mean){
+    return (sdev/mean);
+}
+
+function chebyshevTheorem()
 /*
 TODO
-Standard deviation - population
-Standard deviation - sample
-Standard deviation - grouped data
-Variance - population
-Variance - sample
-Variance - grouped data
-Coefficient of variation
 Chebyshev's theorem
 Z-score
 Percentile
@@ -102,6 +121,8 @@ Decile
 Find outliers
 Five number summary
 
+Variance - grouped data
+Standard deviation - grouped data
 Once this is done cover section 3.4
 
 */
