@@ -45,8 +45,8 @@ class Population{
 
     //range of dataset
     get range() {
-        this.dataset.sort();
-        return [this.dataset[0], this.dataset[this.dataset.length - 1]];
+        let arr = this.dataset.sort();
+        return (arr[arr.length-1] - arr[0]);
     }
 
     //return the sum of the elements in the dataset
@@ -60,24 +60,11 @@ class Population{
 //!!!
     //variance for population
     get variance(){
-        const MEAN = mean(arr);
+        const MEAN = this.mean;
         let topLine = 0;
-        let n = arr.length;
+        let n = this.dataset.length;
         let variance = 0;
-        arr.forEach(element => {
-            topLine += Math.pow((element - MEAN), 2);
-        });
-        variance = (topLine/n);
-        return variance;
-    }
-
-    //Variance for sample
-    varianceSample(arr){
-        const MEAN = mean(arr);
-        let topLine = 0;
-        let n = arr.length -1;
-        let variance = 0;
-        arr.forEach(element => {
+        this.dataset.forEach(element => {
             topLine += Math.pow((element - MEAN), 2);
         });
         variance = (topLine/n);
@@ -85,23 +72,23 @@ class Population{
     }
 
     //Standard deviation for a population
-    stDevPopulation(arr){
-        return Math.sqrt(variancePopulation(arr));
+    get stDev(){
+        return Math.sqrt(this.variance);
     }
 
-    //Standard deviation for a Sample
-    stDevSample(arr){
-        return Math.sqrt(varianceSample(arr));
+    zScore(value){
+        return (value - this.mean)/this.stDev;
     }
 
     //coefficient of variation
-    coefficientOfVariation(sdev, mean){
+    coefficientOfVariation(){
         return (sdev/mean);
     }
 
     //chebychev's theorem
-    chebyshevTheorem(){
+    chebyshevTheorem(x){
         //k = x - mean / stan dev
+        let k = x - mean()/this.stDev;
         return (1 - (1/(Math.pow(k, 2))));
     }
 }
