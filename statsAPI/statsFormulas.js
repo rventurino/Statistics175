@@ -108,7 +108,13 @@ function coefficientOfVariation(sdev, mean){
     return (sdev/mean);
 }
 
-function chebyshevTheorem()
+//chebychev's theorem
+function chebyshevTheorem(){
+    //k = x - mean / stan dev
+    return (1 - (1/(Math.pow(k, 2))));
+}
+
+console.log("ct: " + chebyshevTheorem(2.5))
 /*
 TODO
 Chebyshev's theorem
