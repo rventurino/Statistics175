@@ -4,13 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+      integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script src="https://cdn.tutorialjinni.com/accounting.js/0.4.1/accounting.js"></script>
+    <title>SANDBOX - STATS</title>
   </head>
   <body>
     <h1>sandbox</h1>
     <div id="myDiv" style="width: 600px; height: 250px"></div>
-
-    <script src="../statsAPI/statsFormulas.js"></script>
+    <div id="tableContainer">
+      <table style="width: 95%" id="myTable">
+        
+      </table>
+    </div>
+    <canvas id="myChart"></canvas>
+    <script src="statsFormulasWORKING.js"></script>
     <script src="sandbox.js"></script>
   </body>
 </html>
