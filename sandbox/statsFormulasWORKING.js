@@ -83,15 +83,7 @@ function listOfMidpoints(arr) {
     }
     return listofpoints;
   }
-//percentile rank of a number
-function percentileRank(arr, percentile){
-    let p = percentile;
-    let n = arr.length + 1;
-    let r;
 
-    r = (p / (100)*n);
-    return r;
-}
 //variance for population
 function variancePopulation(arr){
     const MEAN = mean(arr);
@@ -131,8 +123,16 @@ function stDevSample(arr){
 function midPoint(low, high){
     return (low + high)/2;
 }
+//generates a frequency table and also returns object containing arrays for:
+// boundaries, midpoints, frequencies, cumulative frequencies, and relative frequencies
+/*
+!!!! TEST CASES !!!!
+let testArray = [0, 2, 2, 2, 3, 4, 6, 7, 7, 8, 10, 12, 13, 44, 55,0, 2, 2, 2, 3, 4, 6, 7, 7, 8, 10, 12, 13, 44, 55];
 
+console.table(frequencyTable(testArray, 5));
+*/
 function frequencyTable(arr, classWidth){
+        let percentileRanks = [];
         let dataset = arr.sort(function(a, b){return a-b});
         let midpoints = [];
         let frequencies = [];
@@ -144,12 +144,11 @@ function frequencyTable(arr, classWidth){
         var table = document.getElementById("myTable");
         
         let reps = Math.ceil(dataset[dataset.length-1]/classWidth); //how many classes to make
-      //loop through the 13 rows of data to give them value
+      
       for (i = 0; i < reps; i++) {
-        //assign low and high boundaries mathematically
+        //assign low and high boundaries
         lowBoundaries.push(0 + i * classWidth);
         highBoundaries.push(classWidth + i * classWidth);
-
         //set midpoints
         //midpoint = (lowBoundary + highBoundary) / 2;
         midpoints.push(midPoint(lowBoundaries[i], highBoundaries[i]));
@@ -177,6 +176,7 @@ function frequencyTable(arr, classWidth){
         //then add that number to the list of relative frequencies
         relativefrequencies.push((frequencies[i] / dataset.length).toFixed(3));
 
+
         //print the resulting values to the HTML table
         if(i === 0){
             table.innerHTML += `<tr>
@@ -197,7 +197,7 @@ function frequencyTable(arr, classWidth){
                                     </tr>
                                     `;
       } //END OF TABLE GENERATOR ALGORITHM
-
+/*
       // CHART .JS API
       var ctx = document.getElementById("myChart").getContext("2d");
       var chart = new Chart(ctx, {
@@ -261,6 +261,116 @@ function frequencyTable(arr, classWidth){
         // Configuration options go here
         options: {},
       });
+
+     */
+
+        let asObject = {
+            lowBoundaries: lowBoundaries,
+            highBoundaries: highBoundaries,
+            midpoints: midpoints,
+            frequencies: frequencies,
+            cumulativefrequencies: cumulativefrequencies,
+            relativefrequencies: relativefrequencies
+        }
+        return asObject;
+}
+//citation: https://gist.github.com/IceCreamYou/6ffa1b18c4c8f6aeaad2
+// Returns the value at a given percentile in a sorted numeric array.
+// "Linear interpolation between closest ranks" method
+function percentile(arr, p) {
+    if (arr.length === 0) return 0;
+    if (typeof p !== 'number') throw new TypeError('p must be a number');
+    if (p <= 0) return arr[0];
+    if (p >= 1) return arr[arr.length - 1];
+
+    var index = (arr.length - 1) * p,
+        lower = Math.floor(index),
+        upper = lower + 1,
+        weight = index % 1;
+
+    if (upper >= arr.length) return arr[lower];
+    return arr[lower] * (1 - weight) + arr[upper] * weight;
+}
+
+// Returns the percentile of the given value in a sorted numeric array.
+function percentRank(arr, v) {
+    if (typeof v !== 'number') throw new TypeError('v must be a number');
+    for (var i = 0, l = arr.length; i < l; i++) {
+        if (v <= arr[i]) {
+            while (i < l && v === arr[i]) i++;
+            if (i === 0) return 0;
+            if (v !== arr[i-1]) {
+                i += (v - arr[i-1]) / (arr[i] - arr[i-1]);
+            }
+            return i / l;
+        }
+    }
+    return 1;
+}
+function fiveNumberSummaryAsObject(arr){
+  let dataset = arr.sort(function(a, b){return a-b});
+  let minimum = dataset[0];
+  let maximum = dataset[dataset.length-1];
+  let med = median(dataset);
+  let q1 = percentile(dataset, 0.25);
+  let q3 = percentile(dataset, 0.75);
+  
+  let results = {
+    minimum: minimum,
+    maximum: maximum,
+    q1: q1,
+    median: med,
+    q3: q3
+  }
+  return results;
+}
+function fiveNumberSummary(arr){
+    let dataset = arr.sort(function(a, b){return a-b});
+    let minimum = dataset[0];
+    let maximum = dataset[dataset.length-1];
+    let med = median(dataset);
+    let q1 = percentile(dataset, 0.25);
+    let q3 = percentile(dataset, 0.75);
+    let results = [minimum, maximum, q1, med, q3];
+    return results;
+}
+
+function interquartileRange(arr){
+    let dataset = arr.sort(function(a, b){return a-b});
+    let fiveNumSum = fiveNumberSummary(dataset);
+    return (fiveNumSum[4] - fiveNumSum[2]);
+}
+function arrayOfOutliers(arr){
+  let fiveNumSum = fiveNumberSummary(arr);
+  let iqr = interquartileRange(arr);
+  let dataset = arr.sort(function(a, b){return a-b});
+  let step3 = iqr * 1.5;
+  let lowEnd = fiveNumSum[2] - step3;
+  let highEnd = fiveNumSum[4] + step3;
+  let outliers = [];
+  console.log("fivenumsum " + fiveNumSum)
+  dataset.forEach(element => {
+      if(lowEnd > element || highEnd < element){
+          outliers.push(element);
+      }
+  });
+  return outliers;
+}
+
+function getRidOfOutliers(){
+  let fiveNumSum = fiveNumberSummary(arr);
+  let iqr = interquartileRange(arr);
+  let dataset = arr.sort(function(a, b){return a-b});
+  let step3 = iqr * 1.5;
+  let lowEnd = fiveNumSum[2] - step3;
+  let highEnd = fiveNumSum[4] + step3;
+  let arrayWithoutOutliers = [];
+  dataset.forEach(element => {
+      if(lowEnd > element || highEnd < element){
+          arrayWithoutOutliers.push(element);
+      }
+  });
+  return arrayWithoutOutliers;
 }
 /*
 //coefficient of variation
@@ -302,4 +412,56 @@ Sum array
 standard dev
 List of midpoints
 
+*/
+/*
+DEAD FUNCTIONS
+
+
+
+
+function fiveNumberSummary(arr){
+    let dataset = arr.sort(function(a, b){return a-b});
+    let minimum = dataset[0];
+    let maximum = dataset[dataset.length-1];
+    let med = median(dataset);
+    let q1 = percentile(dataset, 0.25);
+    let q3 = percentile(dataset, 0.75);
+    let results = [minimum, maximum, q1, med, q3];
+    return results;
+}
+
+
+
+function arrayOfOutliers(arr){
+    let fiveNumSum = fiveNumberSummary(arr);
+    let iqr = interquartileRange(arr);
+    let dataset = arr.sort(function(a, b){return a-b});
+    let step3 = iqr * 1.5;
+    let lowEnd = fiveNumSum[2] - step3;
+    let highEnd = fiveNumSum[4] + step3;
+    let outliers = [];
+    console.log("fivenumsum " + fiveNumSum)
+    dataset.forEach(element => {
+        if(lowEnd > element || highEnd < element){
+            outliers.push(element);
+        }
+    });
+    return outliers;
+}
+
+function getRidOfOutliers(){
+    let fiveNumSum = fiveNumberSummary(arr);
+    let iqr = interquartileRange(arr);
+    let dataset = arr.sort(function(a, b){return a-b});
+    let step3 = iqr * 1.5;
+    let lowEnd = fiveNumSum[2] - step3;
+    let highEnd = fiveNumSum[4] + step3;
+    let arrayWithoutOutliers = [];
+    dataset.forEach(element => {
+        if(lowEnd > element || highEnd < element){
+            arrayWithoutOutliers.push(element);
+        }
+    });
+    return arrayWithoutOutliers;
+}
 */
