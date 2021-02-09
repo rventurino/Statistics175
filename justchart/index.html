@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="myChart"></canvas>
+    <script src="../statsAPI/statsFormulas.js"></script>
+    <script>
+      let frequencies = [2, 6, 4, 8, 10, 15, 16, 12];
+      let relfreq = [];
+      console.log("Mean " + mean(frequencies));
+
+      for (let i = 0; i < frequencies.length; i++) {
+        relfreq.push(frequencies[i] / 8);
+      }
+      // CHART .JS API
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "line",
+
+        // The data for our dataset
+        data: {
+          labels: [
+            `0 - 11.5`,
+            `11.5 - 23`,
+            `23 - 34.5`,
+            `34.5 - 46`,
+            `46 - 57.5`,
+            `57.5 - 69`,
+            `69 - 80.5`,
+            `80.5 - 92`,
+          ],
+          datasets: [
+            {
+              label: "Question 2",
+              backgroundColor: "rgb(255, 99, 132)",
+              borderColor: "rgb(255, 99, 132)",
+              data: relfreq,
+              fill: false,
+            },
+          ],
+        },
+
+        // Configuration options go here
+        options: {
+          elements: {
+            line: {
+              tension: 0,
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
