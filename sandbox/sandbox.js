@@ -20,4 +20,4 @@ q3
 */
 let arr = [9, 12, 15, 16, 18, 19, 20, 22, 24, 25];
 
-console.table(fiveNumberSummaryAsObject(arr))
+console.table(fiveNumberSummaryAsObject(arr, 2))

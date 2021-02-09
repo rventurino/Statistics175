@@ -293,19 +293,24 @@ function percentile(arr, p) {
 }
 
 // Returns the percentile of the given value in a sorted numeric array.
-function percentRank(arr, v) {
-    if (typeof v !== 'number') throw new TypeError('v must be a number');
-    for (var i = 0, l = arr.length; i < l; i++) {
-        if (v <= arr[i]) {
-            while (i < l && v === arr[i]) i++;
-            if (i === 0) return 0;
-            if (v !== arr[i-1]) {
-                i += (v - arr[i-1]) / (arr[i] - arr[i-1]);
-            }
-            return i / l;
-        }
-    }
-    return 1;
+function percentRank(array, n) {
+  var L = 0;
+  var S = 0;
+  var N = array.length
+
+  for (var i = 0; i < array.length; i++) {
+      if (array[i] < n) {
+          L += 1
+      } else if (array[i] === n) {
+          S += 1
+      } else {
+
+      }
+  }
+
+  var pct = (L + (0.5 * S)) / N
+
+  return pct
 }
 function fiveNumberSummaryAsObject(arr){
   let dataset = arr.sort(function(a, b){return a-b});
