@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ==" crossorigin="anonymous" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+      integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+      crossorigin="anonymous"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
     <script src="https://cdn.tutorialjinni.com/accounting.js/0.4.1/accounting.js"></script>
     <title>Stats API</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="tableContainer">
-        <table style="width:95%" id="myTable">
-            <tr>
-            <th>Boundaries</th>
-            <th>Midpoint </th>
-            <th>Frequency </th>
-            <th>Cumulative Frequency</th>
-            <th>Relative Frequency</th>
-            </tr>
-        </table>
-      </div>
-      <div id="otherData">
+      <table style="width: 95%" id="myTable">
+        <tr>
+          <th>Boundaries</th>
+          <th>Midpoint</th>
+          <th>Frequency</th>
+          <th>Cumulative Frequency</th>
+          <th>Relative Frequency</th>
+        </tr>
+      </table>
+    </div>
+    <div id="otherData"></div>
+    <script src="statsFormulas.js"></script>
+    <script src="tableGenerator.js"></script>
 
-      </div>
-    
+    <!--
       <script src="population.js"></script>
       <script src="sample.js"></script>
       <script src="staging.js"></script>
       <script src="groupedDataSet.js"></script>
-
-</body>
+      -->
+  </body>
 </html>
