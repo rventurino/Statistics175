@@ -1,3 +1,33 @@
+//chapter 3-4
+//Q11
+/*
+School Graduation Rates: The data show a sample of states' percentage of public high school 
+graduation rates for a recent year. Construct a boxplot for the data, and comment on the 
+shape of the distribution.
+*/
+graduationRates = [79, 82, 77, 84, 80, 89, 60, 79, 91, 93, 88]
+//sort 
+graduationRates.sort((a, b) => a - b)
+console.log("question 11 pg 181 3-4")
+console.log("graduation rates " + graduationRates);
+console.log("median: " + median(graduationRates));
+
+
+const quantile = (arr, q) => {
+    const sorted = asc(arr);
+    const pos = (sorted.length - 1) * q;
+    const base = Math.floor(pos);
+    const rest = pos - base;
+    if (sorted[base + 1] !== undefined) {
+        return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+    } else {
+        return sorted[base];
+    }
+};
+
+console.log("q1: " + quantile(graduationRates, 1))
+frequencyTable(graduationRates, 10)
+
 //chapter 3-3
 
 //question 23
@@ -18,23 +48,5 @@ billlions of dollars of the damage of 10 hurricanes
     console.table(output);
 
 /*
-   function percentRank(array, n) {
-    var L = 0;
-    var S = 0;
-    var N = array.length
-
-    for (var i = 0; i < array.length; i++) {
-        if (array[i] < n) {
-            L += 1
-        } else if (array[i] === n) {
-            S += 1
-        } else {
-
-        }
-    }
-
-    var pct = (L + (0.5 * S)) / N
-
-    return pct
-}
+ 
 */

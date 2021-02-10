@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src = "https://d3js.org/d3.v4.min.js"></script> 
+    <script src="https://d3js.org/d3.v4.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
@@ -14,17 +14,101 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
     <script src="https://cdn.tutorialjinni.com/accounting.js/0.4.1/accounting.js"></script>
+    <style>
+      body{
+        background-image: url(kameron-kincade-qiSGdBYWtSY-unsplash.jpg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 2rem;
+
+      }
+      header{
+        display: flex;
+        flex-direction: column;
+      }
+      table{
+        position: relative;
+        padding: 3rem;
+        font-weight: bolder;
+        font-size: 2.5rem;
+      }
+      table td{
+        color: white;
+      }
+      table::after {
+        content: "";
+        background: url(patrick-fore-1gT773Pm8Mo-unsplash.jpg);
+        opacity: 0.5;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;   
+      }
+      #fivenumsum{
+        color: white;
+        width: 300px;
+        font-size: 4rem;
+        background-color: rgba(31, 113, 190, 0.6);
+        border-radius: 10px;
+        padding: 3rem;
+        margin: 4rem;
+      }
+      
+
+      #my_dataviz{
+        position: relative;
+        padding: 3rem;
+        
+      }
+      #my_dataviz::after {
+        content: "";
+        background: url(olga-thelavart-vS3idIiYxX0-unsplash.jpg);
+        opacity: 0.9;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;   
+      }
+      .axis { 
+        color: white;
+        font-size: 3rem;
+       }
+       canvas{
+         margin-top: 3rem;
+         padding: 2rem;
+         background-color: white;
+       }
+       
+    </style>
     <title>SANDBOX - STATS</title>
   </head>
   <body>
-    <h1>sandbox</h1>
+    <header>
+    <h1>Ryan Venturino</h1>
+    <h1>MATH 175</h1>
+    <h1>EXAM # 1 : Feb 10 2021</h1>
+  </header>
     <div id="myDiv" style="width: 600px; height: 250px"></div>
     <div id="tableContainer">
-      <table style="width: 95%" id="myTable">
+      <table id="myTable">
         
       </table>
     </div>
-    <canvas id="myChart"></canvas>
+   <!--five num sum-->
+    <div id ="fivenumsum">
+      <h3>Five number summary</h3>
+    </div>
+<!-- BOXPLOT -->
+<div id="my_dataviz"></div>
+    <canvas id="myChart" width="960px" height="600px"></canvas>
     <script src="statsFormulasWORKING.js"></script>
     <!--<script src="sandbox.js"></script>-->
     <script src="chapter3practice.js"></script>

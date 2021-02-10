@@ -1,3 +1,6 @@
+// sort array ascending
+const asc = arr => arr.sort((a, b) => a - b);
+
 //find the mean of an array
 function mean(arr) {
     return sumArray(arr)/arr.length;
@@ -7,7 +10,7 @@ function median(arr) {
     arr.sort();
     const MID = Math.floor(arr.length / 2);
     if(arr % 2 === 0){
-        return arr[arr.MID];
+        return arr[MID];
     } else return (arr[MID - 1] + arr[MID]) / 2; 
 }
 //mode of an array
@@ -142,13 +145,15 @@ function frequencyTable(arr, classWidth){
         let lowBoundaries = [];
         let highBoundaries = [];
         var table = document.getElementById("myTable");
+        var fivenumsum = document.getElementById("fivenumsum");
+        let classesAsArray = [];
         
         let reps = Math.ceil(dataset[dataset.length-1]/classWidth); //how many classes to make
       
       for (i = 0; i < reps; i++) {
         //assign low and high boundaries
-        lowBoundaries.push(0 + i * classWidth);
-        highBoundaries.push(classWidth + i * classWidth);
+        lowBoundaries.push(dataset[0]-20+ i * classWidth);
+        highBoundaries.push(dataset[0]-20 + classWidth + i * classWidth);
         //set midpoints
         //midpoint = (lowBoundary + highBoundary) / 2;
         midpoints.push(midPoint(lowBoundaries[i], highBoundaries[i]));
@@ -176,10 +181,12 @@ function frequencyTable(arr, classWidth){
         //then add that number to the list of relative frequencies
         relativefrequencies.push((frequencies[i] / dataset.length).toFixed(3));
 
-
+        
         //print the resulting values to the HTML table
         if(i === 0){
-            table.innerHTML += `<tr>
+            table.innerHTML += `
+            <h1> NAME HERE <h1>
+            <tr>
             <th>Boundaries</th>
             <th>Midpoint</th>
             <th>Frequency</th>
@@ -197,7 +204,129 @@ function frequencyTable(arr, classWidth){
                                     </tr>
                                     `;
       } //END OF TABLE GENERATOR ALGORITHM
-/*
+      for(let i = 0; i < lowBoundaries.length; i ++){
+        classesAsArray.push([lowBoundaries[i], highBoundaries[i]])
+      }
+      
+      //five number summary
+      let fivenumbersummary = fiveNumberSummaryAsObject(dataset);
+      fivenumsum.innerHTML += `${JSON.stringify(fivenumbersummary, null, 4)}`;
+      //p3 js box plot maker 
+      // set the dimensions and margins of the graph
+      var margin = {top: 10, right: 30, bottom: 30, left: 40},
+        width = 800 - margin.left - margin.right,
+        height = 800 - margin.top - margin.bottom;
+
+      // append the svg object to the body of the page
+      var svg = d3.select("#my_dataviz")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")").style("font", "25px arial").style('color', 'white');
+      
+      // STATS 175 DATASET HERE
+      var data = dataset
+
+      // Compute summary statistics used for the box:
+      var data_sorted = data.sort(d3.ascending)
+      var q1 = d3.quantile(data_sorted, .25)
+      var median = d3.quantile(data_sorted, .5)
+      var q3 = d3.quantile(data_sorted, .75)
+      var interQuantileRange = q3 - q1
+      var min = q1 - 1.5 * interQuantileRange
+      var max = q1 + 1.5 * interQuantileRange
+
+      // Show the Y scale
+      var y = d3.scaleLinear()
+        .domain([50,100]) //ENTER THE RANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        .range([height, 0]);
+      svg.call(d3.axisLeft(y))
+
+      // a few features for the box
+      var center = 200
+      var width = 100
+
+      // Show the main vertical line
+      svg
+      .append("line")
+        .attr("x1", center)
+        .attr("x2", center)
+        .attr("y1", y(min) )
+        .attr("y2", y(max) )
+        .attr("stroke", "black")
+
+      // Show the box
+      svg
+      .append("rect")
+        .attr("x", center - width/2)
+        .attr("y", y(q3) )
+        .attr("height", (y(q1)-y(q3)) )
+        .attr("width", width )
+        .attr("stroke", "black")
+        .style("fill", "#b44900")
+
+      // show median, min and max horizontal lines
+      svg
+      .selectAll("toto")
+      .data([min, median, max])
+      .enter()
+      .append("line")
+        .attr("x1", center-width/2)
+        .attr("x2", center+width/2)
+        .attr("y1", function(d){ return(y(d))} )
+        .attr("y2", function(d){ return(y(d))} )
+        .attr("stroke", "black")
+
+  
+      // CHART .JS API
+      //THIS ONE MAKES CUMULATIVE FREQUENCY POLYGON BASED ON DATASET
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "line",
+        
+        // The data for our dataset
+        data: {
+          labels: classesAsArray,
+          datasets: [
+            {
+              label: "Pink line",
+              backgroundColor: "rgb(255, 99, 132)",
+              borderColor: "rgb(255, 99, 132)",
+              data: dataset,
+              fill: false,
+            },
+          ],
+        },
+        elements: {
+            line:{
+              lineTension: 0
+            }
+          },
+        // Configuration options go here
+        options: {
+          responsive: false,
+          legend: {
+              position: 'top',
+              onClick: null
+          },
+
+          title: {
+              display: true,
+              text: 'TITLE',
+              fontSize: 20
+          },
+          
+          
+          scales: {
+              yAxes: [{ticks: {fontSize: 20, fontFamily: "'Roboto', sans-serif", fontColor: '#000', fontStyle: '500'}}],
+              xAxes: [{ticks: {fontSize: 20, fontFamily: "'Roboto', sans-serif", fontColor: '#000', fontStyle: '500'}}]
+          }
+      }
+      });
+      /*
       // CHART .JS API
       var ctx = document.getElementById("myChart").getContext("2d");
       var chart = new Chart(ctx, {
